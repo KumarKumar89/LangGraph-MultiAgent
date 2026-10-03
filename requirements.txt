@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+langchain
+langchain-groq
+langchain-community
+pydantic
+python-dotenv
+orjson
+langgraph
+python-multipart
+langchain-tavily
