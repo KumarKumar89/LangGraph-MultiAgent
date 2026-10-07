@@ -1,0 +1,187 @@
+Below is **clean, language-agnostic pseudocode** corresponding to your Python imports. It focuses on **what each component does**, rather than Python syntax.
+
+### Pseudocode — Initialization & Dependencies
+
+```text
+# ==============================================================================
+# 0. IMPORT NECESSARY LIBRARIES
+# ==============================================================================
+
+BEGIN PROGRAM
+
+    # --------------------------------------------------------------------------
+    # Operating System & Environment
+    # --------------------------------------------------------------------------
+    IMPORT OperatingSystemUtilities
+        PURPOSE:
+            - Read environment variables
+            - Access system configuration
+            - Manage runtime environment
+
+    IMPORT TypeDefinitions
+        IMPORT Literal
+        IMPORT List
+
+    # --------------------------------------------------------------------------
+    # Large Language Model
+    # --------------------------------------------------------------------------
+    IMPORT GroqChatModel
+        PURPOSE:
+            - Connect application to Groq-hosted LLM
+            - Send prompts/messages to the model
+            - Receive model-generated responses
+
+    # --------------------------------------------------------------------------
+    # Web API Framework
+    # --------------------------------------------------------------------------
+    IMPORT FastAPI
+        PURPOSE:
+            - Create REST API application
+            - Define API endpoints
+            - Receive HTTP requests
+
+    IMPORT ORJSONResponse
+        PURPOSE:
+            - Return high-performance JSON responses
+
+    IMPORT FormData
+        PURPOSE:
+            - Receive form parameters from HTTP requests
+
+    # --------------------------------------------------------------------------
+    # Web Search Tool
+    # --------------------------------------------------------------------------
+    IMPORT TavilySearchTool
+        PURPOSE:
+            - Perform web searches
+            - Retrieve relevant external information
+            - Provide search results to the AI agent
+
+    # --------------------------------------------------------------------------
+    # Agent Workflow / State Machine
+    # --------------------------------------------------------------------------
+    IMPORT LangGraph
+
+        IMPORT StateGraph
+            PURPOSE:
+                - Build agent workflow as a graph
+                - Define nodes and transitions
+
+        IMPORT END
+            PURPOSE:
+                - Mark termination of workflow
+
+        IMPORT MessagesState
+            PURPOSE:
+                - Maintain conversation/message state
+                - Pass information between workflow nodes
+
+    # --------------------------------------------------------------------------
+    # Messages
+    # --------------------------------------------------------------------------
+    IMPORT HumanMessage
+        PURPOSE:
+            - Represent user input
+
+    IMPORT SystemMessage
+        PURPOSE:
+            - Define system-level instructions
+            - Control agent behavior
+
+    # --------------------------------------------------------------------------
+    # Data Validation / Configuration Models
+    # --------------------------------------------------------------------------
+    IMPORT Pydantic
+
+        IMPORT BaseModel
+            PURPOSE:
+                - Define structured data models
+
+        IMPORT Field
+            PURPOSE:
+                - Define validated model fields
+                - Specify defaults and constraints
+
+    # --------------------------------------------------------------------------
+    # Environment Configuration
+    # --------------------------------------------------------------------------
+    IMPORT EnvironmentLoader
+
+        PURPOSE:
+            - Load variables from .env file
+            - Make API keys and configuration available
+
+    # --------------------------------------------------------------------------
+    # Date & Time
+    # --------------------------------------------------------------------------
+    IMPORT DateTime
+        PURPOSE:
+            - Generate timestamps
+            - Track execution time
+            - Record events
+
+    # --------------------------------------------------------------------------
+    # Application Server
+    # --------------------------------------------------------------------------
+    IMPORT Uvicorn
+        PURPOSE:
+            - Start FastAPI application
+            - Run ASGI web server
+
+END PROGRAM
+```
+
+### High-level dependency flow
+
+```text
+                    ┌───────────────────────┐
+                    │      APPLICATION      │
+                    └───────────┬───────────┘
+                                │
+             ┌──────────────────┼──────────────────┐
+             │                  │                  │
+             ▼                  ▼                  ▼
+       Configuration         API Layer         AI Layer
+       & Environment         FastAPI            LangChain
+             │                  │                  │
+             │                  │          ┌───────┴────────┐
+             │                  │          │                │
+             ▼                  ▼          ▼                ▼
+          .env             HTTP Request   Groq LLM      Tavily Search
+             │                  │          │                │
+             └──────────────────┼──────────┴────────────────┘
+                                │
+                                ▼
+                        ┌───────────────┐
+                        │  LangGraph    │
+                        │ Agent Workflow│
+                        └───────┬───────┘
+                                │
+                       ┌────────┴────────┐
+                       ▼                 ▼
+                Human Message     System Message
+                       │                 │
+                       └────────┬────────┘
+                                ▼
+                         Messages State
+                                │
+                                ▼
+                         Pydantic Models
+                                │
+                                ▼
+                         Validated Output
+                                │
+                                ▼
+                            FastAPI
+                                │
+                                ▼
+                          ORJSON Response
+                                │
+                                ▼
+                            Uvicorn
+                                │
+                                ▼
+                           CLIENT
+```
+
+**In one sentence:** this import section establishes the foundation for an **LLM-powered agentic API** where **FastAPI handles requests → LangGraph orchestrates state/workflow → Groq provides the LLM → Tavily provides web search → Pydantic validates structured data → Uvicorn serves the application**.
